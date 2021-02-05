@@ -1,30 +1,29 @@
-#
-# Moh's Checkers game
-# A simple checkers game made in Python using Pygame
-# ... github link
-# 
-# Released under the GNU General Public License
-try:
-    import pygame
-    import os, sys 
-    from pygame.locals import *
-    import random
-except ImportError as err:
-    print("Couldn't load module {}".format(err))
-    sys.exit(2)
+import pygame
+from checkers.constants import WIDTH, HEIGHT
+from checkers.board import Board
 
-def load_img(name):
-    """ Load image and return mage object """
-    fullname = os.path.join('images', name)
-    try:
-        image = pygame.image.load(fullname)
-        if image.get_alpha() is None:
-            image = image.convert()
-        else:
-            image = image.convert_alpha()
-    except pygame.error as message:
-        print("Cannot load image:", fullname)
-        raise SystemExit(message)
-    return image, image.get_rect()
+FPS = 60
+
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption('pyCheckers')
+
+def main():
+    run = True
+    clock = pygame.time.Clock()
+    board = Board()
+
+    while run:
+        clock.tick(FPS)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pass
+        board.draw_squares(WIN)
+        pygame.display.update()
     
-test = load_img('red_piece.png')
+    pygame.quit()
+
+main()
